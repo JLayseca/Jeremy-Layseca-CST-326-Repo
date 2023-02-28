@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Breakable
   - CoinGiver
+  - Goal
   layers:
   - Default
   - TransparentFX

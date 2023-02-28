@@ -2,28 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+//Mathf.floor
+//float public
 
 public class Countdown : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float seconds;
+    private float displayTime;
+    public TextMeshProUGUI Timer;
+    public TextMeshProUGUI TimeMessage;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (seconds > 0)
+        {
+            seconds -= Time.deltaTime;
+            displayTime = Mathf.Floor(seconds);
+            Timer.text = $"Time\n{displayTime}";
+        }
+
+        if (seconds <= 0)
+        {
+            seconds = 0;
+            Timer.text = $"Time\n{seconds}";
+            TimeMessage.text = $"Time's up!\nGame Over!";
+        }
     }
 
-    //public static void StartCountdown(TimeSpan totalTime)
-    //{
-        //DateTime StartingTime = DateTime.Now; 
-        //TotalTime = totalTime;
 
-        //var remainingTime = TotalTime - (DateTime.Now - StartingTime);
-        //Timer.text = $"Time/n{remainingTime}";
-    //}
 }
