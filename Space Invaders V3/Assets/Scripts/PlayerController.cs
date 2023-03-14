@@ -8,10 +8,13 @@ public class PlayerController : MonoBehaviour
     public Transform shootingOffset;
     public float acceleration = 4f;
     private int health = 3;
+
+    AudioSource playerNoise;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerNoise = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,6 +30,7 @@ public class PlayerController : MonoBehaviour
             {
                 GameObject Bullet = Instantiate(bullet,shootingOffset.position, Quaternion.identity);
                 Debug.Log("Shot Fired!");
+                playerNoise.Play(0);
                 Destroy(Bullet, 3f);
             }
         }

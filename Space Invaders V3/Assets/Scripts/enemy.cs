@@ -54,7 +54,7 @@ public class enemy : MonoBehaviour
     void EnemyMoveDown()
     {
         transform.position = position;
-        position = new Vector3(position.x, position.y - 1f, position.z);
+        position = new Vector3(position.x, position.y - 2f, position.z);
     }
 
     void PositionChecker()
@@ -102,7 +102,7 @@ public class enemy : MonoBehaviour
         if (Random.value > 0.97)
         {
             GameObject Bullet = Instantiate(bullet, position, Quaternion.identity);
-            Destroy(Bullet, 3f);
+            Destroy(Bullet, 5f);
         }
     }
 

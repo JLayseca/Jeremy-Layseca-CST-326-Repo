@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class manager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class manager : MonoBehaviour
     public TextMeshProUGUI HighScore;
     float scoreCount;
     float HighestScore;
+    public string creditsSceneName;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,15 @@ public class manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameObject.Find("Player") == null)
+        {
+            SceneManager.LoadScene(creditsSceneName, LoadSceneMode.Single);
+        }
         
+        if (GameObject.Find("Enemy 1(Clone)") == null && GameObject.Find("Enemy 2(Clone)") == null && GameObject.Find("Enemy 3(Clone)") == null)
+        {
+            SceneManager.LoadScene(creditsSceneName, LoadSceneMode.Single);
+        }
     }
 
     void enemySpawner()
