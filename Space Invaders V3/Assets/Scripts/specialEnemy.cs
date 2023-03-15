@@ -9,6 +9,8 @@ public class specialEnemy : MonoBehaviour
     static bool RightLeftTF = true;
     bool priorChecker = RightLeftTF;
     static float movementTimer = 1f;
+    AudioSource enemyNoise;
+    public AudioClip explosionSound;
     
     public delegate void DeathDelegate(float a);
     public static event DeathDelegate deathEvent;
@@ -17,6 +19,7 @@ public class specialEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enemyNoise = GetComponent<AudioSource>();
         position = transform.position;
         InvokeRepeating("EnemyMoveLeftRight", 0f, movementTimer);
         InvokeRepeating("PositionChecker", 0f, movementTimer / 2);
@@ -71,7 +74,9 @@ public class specialEnemy : MonoBehaviour
         deathEvent.Invoke(pointValue);
         if (bullet.gameObject.tag == "Bullet")
         {
-            Destroy(gameObject);
+            enemyNoise.clip = explosionSound;
+            enemyNoise.Play();
+            Destroy(gameObject, 3f);
         }
     }
 }

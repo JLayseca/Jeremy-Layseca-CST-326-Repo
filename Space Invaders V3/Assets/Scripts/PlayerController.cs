@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private int health = 3;
 
     AudioSource playerNoise;
+    public AudioClip laserSound;
+    public AudioClip explosionSound;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,8 @@ public class PlayerController : MonoBehaviour
             {
                 GameObject Bullet = Instantiate(bullet,shootingOffset.position, Quaternion.identity);
                 Debug.Log("Shot Fired!");
-                playerNoise.Play(0);
+                playerNoise.clip = laserSound;
+                playerNoise.Play();
                 Destroy(Bullet, 3f);
             }
         }
@@ -50,7 +53,12 @@ public class PlayerController : MonoBehaviour
         {
             health--;
             if (health == 0)
-                Destroy(gameObject);
+            {
+                playerNoise.clip = explosionSound;
+                playerNoise.Play();
+
+                Destroy(gameObject, 3f);
+            }
         }
     }
 }

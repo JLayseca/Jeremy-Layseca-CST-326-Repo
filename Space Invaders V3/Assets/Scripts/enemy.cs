@@ -10,6 +10,11 @@ public class enemy : MonoBehaviour
     bool priorChecker = RightLeftTF;
     static float movementTimer = 1f;
     public GameObject bullet;
+    private bool canFire = true;
+
+    AudioSource enemyNoise;
+    public AudioClip laserSound;
+    public AudioClip explosionSound;
     
     public delegate void DeathDelegate(float a);
     public static event DeathDelegate deathEvent;
@@ -18,6 +23,7 @@ public class enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enemyNoise = GetComponent<AudioSource>();
         position = transform.position;
         InvokeRepeating("EnemyMoveLeftRight", 0f, movementTimer);
         InvokeRepeating("PositionChecker", 0f, movementTimer / 2);
@@ -91,17 +97,22 @@ public class enemy : MonoBehaviour
         deathEvent.Invoke(pointValue);
         if (bullet.gameObject.tag == "Bullet")
         {
+            canFire = false;
             movementTimer -= 0.1f;
             Debug.Log(pointValue);
-            Destroy(gameObject);
+            enemyNoise.clip = explosionSound;
+            enemyNoise.Play();
+            Destroy(gameObject, 3f);
         }
     }
 
     void YouMayFireWhenReady()
     {
-        if (Random.value > 0.97)
+        if (Random.value > 0.97 && canFire == true)
         {
             GameObject Bullet = Instantiate(bullet, position, Quaternion.identity);
+            enemyNoise.clip = laserSound;
+            enemyNoise.Play();
             Destroy(Bullet, 5f);
         }
     }

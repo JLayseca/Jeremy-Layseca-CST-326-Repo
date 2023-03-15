@@ -247,6 +247,8 @@ MonoBehaviour:
   bullet: {fileID: 4032326614261269077, guid: 0e87a97caedbe25419f862b9208c0495, type: 3}
   shootingOffset: {fileID: 1307862416}
   acceleration: 4
+  laserSound: {fileID: 8300000, guid: 0904cc0f4dc19aa44a02f1a94a030ef5, type: 3}
+  explosionSound: {fileID: 8300000, guid: 780b0faf1a63264428b75e8f91c9625c, type: 3}
 --- !u!54 &348583155
 Rigidbody:
   m_ObjectHideFlags: 0
