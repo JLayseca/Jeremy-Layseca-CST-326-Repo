@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public Transform shootingOffset;
     public float acceleration = 4f;
     private int health = 3;
+    private Animator playerAnimator;
 
     AudioSource playerNoise;
     public AudioClip laserSound;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerAnimator = GetComponent<Animator>();
         playerNoise = GetComponent<AudioSource>();
     }
 
@@ -24,12 +26,14 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
+            
             if (GameObject.Find("Bullet(Clone)") != null)
             {
                 Debug.Log("We're still reloading!");
             }
             else
             {
+                playerAnimator.SetTrigger("ShootTrigger");
                 GameObject Bullet = Instantiate(bullet,shootingOffset.position, Quaternion.identity);
                 Debug.Log("Shot Fired!");
                 playerNoise.clip = laserSound;
@@ -56,8 +60,8 @@ public class PlayerController : MonoBehaviour
             {
                 playerNoise.clip = explosionSound;
                 playerNoise.Play();
-
-                Destroy(gameObject, 3f);
+                playerAnimator.SetTrigger("UhOh");
+                Destroy(gameObject, 2f);
             }
         }
     }

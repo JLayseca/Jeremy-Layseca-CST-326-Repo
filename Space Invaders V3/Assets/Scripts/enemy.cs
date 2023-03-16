@@ -11,6 +11,8 @@ public class enemy : MonoBehaviour
     static float movementTimer = 1f;
     public GameObject bullet;
     private bool canFire = true;
+    private Animator enemyAnimator;
+    public ParticleSystem boom;
 
     AudioSource enemyNoise;
     public AudioClip laserSound;
@@ -23,6 +25,8 @@ public class enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        boom = GetComponent<ParticleSystem>();
+        enemyAnimator = GetComponent<Animator>();
         enemyNoise = GetComponent<AudioSource>();
         position = transform.position;
         InvokeRepeating("EnemyMoveLeftRight", 0f, movementTimer);
@@ -98,11 +102,13 @@ public class enemy : MonoBehaviour
         if (bullet.gameObject.tag == "Bullet")
         {
             canFire = false;
+            enemyAnimator.SetTrigger("UhOh");
+            boom.Play();
             movementTimer -= 0.1f;
             Debug.Log(pointValue);
             enemyNoise.clip = explosionSound;
             enemyNoise.Play();
-            Destroy(gameObject, 3f);
+            Destroy(gameObject, 2f);
         }
     }
 
