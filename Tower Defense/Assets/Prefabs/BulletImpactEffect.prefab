@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8560180663740815720}
   - component: {fileID: 8560180663740815723}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: BulletImpactEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -288,7 +288,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.25
-      minScalar: 0.5
+      minScalar: 0.15
       maxCurve:
         serializedVersion: 2
         m_Curve:

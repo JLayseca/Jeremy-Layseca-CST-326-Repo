@@ -17,24 +17,37 @@ public class BuildManager : MonoBehaviour
     }
 
     public GameObject standardTurretPrefab;
+    public GameObject rocketTurretPrefab;
 
-    // Start is called before the first frame update
-    void Start()
+    public GameObject buildEffect;
+
+    private TurretBlueprint turretToBuild;
+
+    public bool CanBuild { get { return turretToBuild != null; } }
+    public bool HasMoney { get { return PlayerStats.Money >= turretToBuild.cost; } }
+
+    public void BuildTurretOn (NodeScript node)
     {
-        turretToBuild = standardTurretPrefab;
-    }
+        if (PlayerStats.Money < turretToBuild.cost)
+        {
+            Debug.Log ("You're too poor to pay for that!");
+            return;
+        }
 
-    private GameObject turretToBuild;
+        PlayerStats.Money -= turretToBuild.cost;
 
-    public GameObject GetTurretToBuild()
-    {
-        return turretToBuild;
-    }
+        GameObject turret = (GameObject)Instantiate(turretToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
+        node.turret = turret;
 
-    // Update is called once per frame
-    void Update()
-    {
+        GameObject effect = (GameObject)Instantiate(buildEffect, node.GetBuildPosition(), Quaternion.identity);
+        Destroy(effect, 5f);
         
+        Debug.Log ("Turret built. Money left: " + PlayerStats.Money);
+    }
+
+    public void SelectTurretToBuild(TurretBlueprint turret)
+    {
+        turretToBuild = turret;
     }
 
 }
