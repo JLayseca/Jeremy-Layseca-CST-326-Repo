@@ -1,0 +1,219 @@
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class GameOver : MonoBehaviour {
+
+    public Text roundsText;
+
+	public string menuSceneName = “MainMenu”;
+
+	public SceneFader sceneFader;
+    
+    void OnEnable ()
+    {
+        roundsText.text = PlayerStats.Rounds.ToString();
+    }
+
+    public void Retry()
+    {
+        sceneFader.FadeTo(SceneManager.GetActiveScene().name);
+    }
+
+    public void Menu()
+    {
+        sceneFader.FadeTo(menuSceneName);
+    }
+}
+
+
+
+
+
+using UnityEngine;
+using UnityEngine.UI;
+
+public class NodueUI : MonoBehaviour {
+
+    public GameObject ui;
+
+    public Text upgradeCost;
+
+	public Text sellAmount;
+
+    private Node target;
+
+    public void SetTarget(Node _target)
+    {
+        target = _target;
+
+        transform.position = target.GetBuildPosition();
+
+        if (!target.isUpgraded)
+        {
+            upgradeCost.text = "$" + target.turretBlueprint.upgradeCost;
+            upgradeButton.interactable = true;
+            {
+                
+            }
+        } else
+        {
+            upgradeCost.text = "Turret Maxed";
+            upgradeButton.interactable = false;
+        }
+
+	sellAmount.text = “$” + target.turretBluePrint.GetSellAmount();
+
+        ui.SetActive(true);
+    }    
+
+    public void Hide ()
+    {
+        ui.SetActive(false);
+    }
+
+    public void Upgrade()
+    {
+        target.UpgradeTurret();
+        BuildManager.Instance.DeselectNode();
+
+    }
+
+    public void Sell()
+    {
+        target.SellTurret();
+        BuildManager.Instance.DeselectNode();
+
+    }
+
+}
+
+
+
+
+
+
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class PauseMenu : MonoBehaviour {
+
+	public GameObject ui;
+
+	public string menuSceneName = “MainMenu”;
+
+	public SceneFader sceneFader;
+
+	void Update ()
+	{
+		if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+		{
+			Toggle();
+		}
+	}
+
+	public void Toggle ()
+	{
+		ui.SetActive(!ui.activeSelf);
+
+		if (ui.activeSelf)
+		{
+			Time.timeScale = 0f;
+		} else
+		{
+			Time.timeScale = 1f;
+		}
+	}
+
+	public void Retry()
+	{	
+		Toggle();
+		sceneFader.FadeTo(SceneManager.GetActiveScene().name);
+	}
+
+	public void Menu()
+	{
+		Toggle();
+		sceneFader.FadeTo(menuSceneName);
+	}
+
+}
+
+
+
+
+using UnityEngine;
+using System.Collections;
+
+public class MainMenu : MonoBehaviour {
+
+	public string levelToLoad = “MainLevel”;
+	
+	public SceneFader sceneFader;
+
+	public void Play()
+	{
+		sceneFader.FadeTo(levelToLoad);
+	}
+
+	public void Quit()
+	{
+		Debug.Log(“Bye!”);
+		Application.Quit();
+	}
+
+}
+
+
+
+
+
+using UnityEngine;
+using UnityEngine.UI
+using UnityEngine.SceneManagement;
+using System.Collections;
+
+public class SceneFader : MonoBehaviour {
+
+	public Image img;
+	public AnimationCurve fadeCurve;
+
+	void Start()
+	{
+		StartCoroutine(FadeIn());
+	}
+
+	public void FadeTo (string scene)
+	{
+		StartCoroutine(FadeOut(scene));
+	}
+
+	IEnumerator FadeIn()
+	{
+		float t = 1f;
+
+		while (t > 0f);
+		{
+			t -= Time.deltaTime;
+			float a = curve.Evaluate(t);
+			img.color = new Color (0f, 0f, 0f, a);
+			yield return 0;
+		}
+	}
+
+	IEnumerator FadeOut(string scene)
+	{
+		float t = 0f;
+
+		while (t < 1f);
+		{
+			t += Time.deltaTime;
+			float a = curve.Evaluate(t);
+			img.color = new Color (0f, 0f, 0f, a);
+			yield return 0;
+		}
+
+		SceneManager.LoadScene(scene);
+	}
+
+}

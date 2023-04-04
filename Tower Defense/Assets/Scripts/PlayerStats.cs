@@ -8,10 +8,13 @@ public class PlayerStats : MonoBehaviour
     public int startMoney = 400;
     public static int HP;
     public int startHP = 20;
+    public static int Rounds;
 
     void Start()
     {
         Money = startMoney;
         HP = startHP;
+
+        Rounds = 0;
     }
 }

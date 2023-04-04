@@ -5,11 +5,18 @@ using UnityEngine;
 public class ManagerOfGame : MonoBehaviour
 {
 
-    private bool gameEnded = false;
-    // Update is called once per frame
+    public static bool GameIsOver;
+    
+    public GameObject gameOverUI;
+
+    void Start ()
+    {
+        GameIsOver = false;
+    }
+
     void Update()
     {
-        if (gameEnded)
+        if (GameIsOver)
             return; 
             
         if (PlayerStats.HP <= 0)
@@ -20,8 +27,8 @@ public class ManagerOfGame : MonoBehaviour
 
     void EndGame ()
     {
-        gameEnded = true;
-        Debug.Log("Game Over!");
+        GameIsOver = true;
+        gameOverUI.SetActive(true);
 
     }
 }

@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections;
 
 public class CameraController : MonoBehaviour {
-    
-    private bool doMovement = true;
 
     public float panSpeed = 30f;
     public float panBorderThickness =10f;
@@ -14,11 +12,12 @@ public class CameraController : MonoBehaviour {
 
     void Update() {
 
-        if (Input.GetKeyDown (KeyCode.Escape))
-            doMovement = !doMovement;
-
-        if (!doMovement)
+        if(ManagerOfGame.GameIsOver)
+        {
+            this.enabled = false;
             return;
+        }
+
 
         if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
         {
@@ -44,7 +43,7 @@ public class CameraController : MonoBehaviour {
         Vector3 pos = transform.position;
 
         pos.y -= scroll * 1000 * scrollSpeed * Time.deltaTime;
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        pos.y = Mathf.Clamp(transform.position.y, minY, maxY);
         transform.position = pos;
     }
 }
