@@ -9,7 +9,7 @@ public class GameOver : MonoBehaviour {
 
 	public string menuSceneName = "MainMenu";
 
-	//public SceneFader sceneFader;
+	public SceneFader sceneFader;
     
     void OnEnable ()
     {
@@ -18,12 +18,11 @@ public class GameOver : MonoBehaviour {
 
     public void Retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //sceneFader.FadeTo(SceneManager.GetActiveScene().name);
+        sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 
     public void Menu()
     {
-        //sceneFader.FadeTo(menuSceneName);
+        sceneFader.FadeTo(menuSceneName);
     }
 }

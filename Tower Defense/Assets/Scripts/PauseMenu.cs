@@ -7,7 +7,7 @@ public class PauseMenu : MonoBehaviour {
 
 	public string menuSceneName = "MainMenu";
 
-	//public SceneFader sceneFader;
+	public SceneFader sceneFader;
 
 	void Update ()
 	{
@@ -33,14 +33,13 @@ public class PauseMenu : MonoBehaviour {
 	public void Retry()
 	{	
 		Toggle();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		//sceneFader.FadeTo(SceneManager.GetActiveScene().name);
+		sceneFader.FadeTo(SceneManager.GetActiveScene().name);
 	}
 
 	public void Menu()
 	{
 		Toggle();
-		//sceneFader.FadeTo(menuSceneName);
+		sceneFader.FadeTo(menuSceneName);
 	}
 
 }
