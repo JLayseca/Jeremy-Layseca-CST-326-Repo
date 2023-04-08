@@ -1,0 +1,61 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class NodeUI : MonoBehaviour {
+
+    public GameObject ui;
+
+    public TMP_Text upgradeCost;
+    public Button upgradeButton;
+
+	public TMP_Text sellAmount;
+
+    private NodeScript target;
+
+    public void SetTarget(NodeScript _target)
+    {
+        target = _target;
+
+        transform.position = target.GetBuildPosition();
+
+        if (!target.isUpgraded)
+        {
+            upgradeCost.text = "$" + target.turretBlueprint.upgradeCost;
+            upgradeButton.interactable = true;
+                
+        } else
+        {
+            upgradeCost.text = "Maxed";
+            upgradeButton.interactable = false;
+
+            
+        }
+
+	sellAmount.text = "$" + target.turretBlueprint.GetSellAmount();
+
+        ui.SetActive(true);
+    }    
+
+    public void Hide ()
+    {
+        ui.SetActive(false);
+    }
+
+    public void Upgrade()
+    {
+        target.UpgradeTurret();
+        BuildManager.instance.DeselectNode();
+
+    }
+
+
+    public void Sell()
+    {
+        target.SellTurret();
+        BuildManager.instance.DeselectNode();
+        
+
+    }
+
+}
