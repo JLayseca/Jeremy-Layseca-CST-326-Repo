@@ -18,7 +18,7 @@ public class EnemyAgent : MonoBehaviour
     {
         GetComponent<NavMeshAgent>().SetDestination(destination.position);
 
-        if (Vector3.Distance(transform.position, destination.position) <= .6f)
+        if (Vector3.Distance(transform.position, destination.position) <= .8f)
         {
             EndPath();
         }
