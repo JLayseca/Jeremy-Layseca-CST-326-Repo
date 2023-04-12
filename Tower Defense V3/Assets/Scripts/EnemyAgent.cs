@@ -7,8 +7,11 @@ public class EnemyAgent : MonoBehaviour
 {
     private Transform destination;
 
+    private Enemy enemy;
+
      void Start()
     {
+        enemy = GetComponent<Enemy>();
         destination = Waypoints.points[0];
 
     }
@@ -22,6 +25,9 @@ public class EnemyAgent : MonoBehaviour
         {
             EndPath();
         }
+
+        enemy.speed = enemy.startSpeed;
+        
     }
 
     void EndPath ()
